@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤝Handy Note - Personal Info in Browser</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            /* background-color: #f5f5f5; */
+            background: rgb(238,174,202);
+background: linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .subhead {
+            color: #333;
+            text-align: center;
+            margin-top: -10px;
+            margin-left: 10px;
+        }
+
+        #toggleButton {
+            background-color: #3498db;
+            color: #fff;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        form, #dataContainer {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .grid-item {
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #2ecc71;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .copy-button {
+            margin-top: 5px;
+        }
+
+        /* Additional styles for better readability in view data */
+        #dataContainer span {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        #dataContainer button {
+            margin-top: 10px;
+            background-color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <h1>🤝Handy Note</h1>
+    <p class="subhead">Personal Info in your Browser</p>
+    <button id="toggleButton">Toggle View</button>
+    
+    <form id="addForm">
+        <h2>Add Data</h2>
+        <div class="grid-container">
+            <div class="grid-item">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="grid-item">
+                <label for="phoneNumber">Phone Number:</label>
+                <input type="tel" id="phoneNumber" name="phoneNumber" required>
+            </div>
+
+            <div class="grid-item">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email">
+            </div>
+
+            <div class="grid-item">
+                <label for="linkedIn">LinkedIn Link:</label>
+                <input type="url" id="linkedIn" name="linkedIn">
+            </div>
+
+            <div class="grid-item">
+                <label for="otherLink">Other Link:</label>
+                <input type="url" id="otherLink" name="otherLink">
+            </div>
+
+            <div class="grid-item">
+                <label for="github">GitHub Link:</label>
+                <input type="url" id="github" name="github">
+            </div>
+
+            <div class="grid-item">
+                <label for="portfolio">Portfolio Link:</label>
+                <input type="url" id="portfolio" name="portfolio">
+            </div>
+
+            <div class="grid-item">
+                <label for="coverLetter">Cover Letter:</label>
+                <textarea id="coverLetter" name="coverLetter" rows="4" cols="50"></textarea>
+            </div>
+
+            <div class="grid-item">
+                <label for="linkedinInvite">LinkedIn Invite:</label>
+                <textarea id="linkedinInvite" name="linkedinInvite" rows="4" cols="50"></textarea>
+            </div>
+
+        </div>
+        <br>
+        <button type="submit" id="addButton">Add</button>
+    </form>
+
+    <div id="dataContainer">
+        <!-- Data will be displayed here -->
+    </div>
+
+    <script>
+        function displayData() {
+            var dataContainer = document.getElementById('dataContainer');
+            dataContainer.innerHTML = '';
+
+            var data = JSON.parse(localStorage.getItem('data'));
+
+            if (data) {
+                for (var i = 0; i < data.length; i++) {
+                    var item = data[i];
+                    var itemDiv = document.createElement('div');
+                    itemDiv.classList.add('grid-item');
+
+                    for (var key in item) {
+                        var value = item[key];
+                        var subheading = document.createElement('h3');
+                        subheading.textContent = key;
+                        itemDiv.appendChild(subheading);
+
+                        var valueSpan = document.createElement('span');
+                        valueSpan.textContent = value;
+                        itemDiv.appendChild(valueSpan);
+
+                        var copyButton = document.createElement('button');
+                        copyButton.classList.add('copy-button');
+                        copyButton.textContent = 'Copy';
+                        copyButton.addEventListener('click', function(value) {
+                            return function() {
+                                copyToClipboard(value);
+                            };
+                        }(value));
+                        itemDiv.appendChild(copyButton);
+                    }
+
+                    dataContainer.appendChild(itemDiv);
+                }
+            }
+        }
+
+        function copyToClipboard(value) {
+            var tempInput = document.createElement('input');
+            tempInput.value = value;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+        }
+
+        var addForm = document.getElementById('addForm');
+        addForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            var formData = new FormData(addForm);
+            var data = {};
+
+            for (var [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+
+            var storedData = [data];
+            localStorage.setItem('data', JSON.stringify(storedData));
+
+            displayData();
+            addForm.reset();
+        });
+
+        var toggleButton = document.getElementById('toggleButton');
+        toggleButton.addEventListener('click', function() {
+            var addForm = document.getElementById('addForm');
+            var dataContainer = document.getElementById('dataContainer');
+
+            if (addForm.style.display === 'none') {
+                addForm.style.display = 'block';
+                dataContainer.style.display = 'none';
+                toggleButton.textContent = 'Toggle View';
+            } else {
+                addForm.style.display = 'none';
+                dataContainer.style.display = 'block';
+                toggleButton.textContent = 'Toggle Input';
+
+                var storedData = JSON.parse(localStorage.getItem('data'));
+                if (storedData && storedData.length > 0) {
+                    var data = storedData[0];
+                    document.getElementById('name').value = data.name || '';
+                    document.getElementById('phoneNumber').value = data.phoneNumber || '';
+                    document.getElementById('email').value = data.email || '';
+                    document.getElementById('github').value = data.github || '';
+                    document.getElementById('coverLetter').value = data.coverLetter || '';
+                    document.getElementById('portfolio').value = data.portfolio || '';
+                    document.getElementById('linkedinInvite').value = data.linkedinInvite || '';
+                    document.getElementById('linkedIn').value = data.linkedIn || '';
+                    document.getElementById('otherLink').value = data.otherLink || '';
+                    // Repeat similar lines for other form fields
+                } else {
+                    document.getElementById('name').value = '';
+                    document.getElementById('phoneNumber').value = '';
+                    document.getElementById('email').value = '';
+                    document.getElementById('github').value = '';
+                    document.getElementById('coverLetter').value = '';
+                    document.getElementById('portfolio').value = '';
+                    document.getElementById('linkedinInvite').value = '';
+                    document.getElementById('linkedIn').value = '';
+                    document.getElementById('otherLink').value = '';
+                    // Repeat similar lines for other form fields
+                }
+            }
+        });
+
+        var storedData = JSON.parse(localStorage.getItem('data'));
+        if (storedData && storedData.length > 0) {
+            var addForm = document.getElementById('addForm');
+            var dataContainer = document.getElementById('dataContainer');
+            addForm.style.display = 'none';
+            dataContainer.style.display = 'block';
+            toggleButton.textContent = 'Toggle Input';
+        } else {
+            var addForm = document.getElementById('addForm');
+            var dataContainer = document.getElementById('dataContainer');
+            addForm.style.display = 'block';
+            dataContainer.style.display = 'none';
+            toggleButton.textContent = 'Toggle View';
+        }
+
+        // Initial data display
+        displayData();
+    </script>
+</body>
+</html>
