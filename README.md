@@ -4,6 +4,7 @@
 </p>
 
 A handy web tool that stores "basic details," "cover letter," and more in your browser. The best part? Quick access with just a click using the copy button!
+site is live at https://solomon-mithra.github.io/-Handy-Note/
 
 ### Objective:
 Utilize Copilot entirely to craft the website, to make accessing "basic details," "cover letter," and more in your browser as easy as copy & paste.
