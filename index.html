@@ -6,45 +6,141 @@
     <title>🤝Handy Note - Personal Info in Browser</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+            font-family: 'Inter', 'Segoe UI', 'Roboto', sans-serif;
+            background: #36393f;
             margin: 0;
-            padding: 20px;
+            padding: 40px 20px;
             box-sizing: border-box;
+            color: #dcddde;
+        }
+
+        .app-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: #2f3136;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+        }
+
+        .app-header {
+            background: #202225;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            color: #b9bbbe;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #dcddde;
+        }
+
+        .app-body {
+            padding: 32px 24px;
+        }
+
+        .section-tag {
+            font-size: 11px;
+            color: #b9bbbe;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
         }
 
         h1 {
-            color: #333;
-            text-align: center;
+            color: #ffffff;
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0 0 8px 0;
         }
+
         .subhead {
-            color: #333;
-            text-align: center;
-            margin-top: -10px;
+            color: #b9bbbe;
+            margin: 32px 0;
+            font-size: 14px;
+        }
+
+        .subhead a {
             margin-left: 10px;
+            color: #5865f2;
+            text-decoration: none;
         }
 
         #toggleButton {
-            background-color: #3498db;
+            background-color: #5865f2;
             color: #fff;
-            padding: 8px 15px;
+            padding: 8px 20px;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        #toggleButton:hover {
+            background-color: #4752c4;
         }
 
         .grid-container {
             display: grid;
-            grid-template-columns: 1fr;
-            grid-gap: 7px;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
         }
 
         .grid-item {
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .grid-item.full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* Data display view - single column stack */
+        #dataContainer .grid-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        #dataContainer .grid-item {
+            background-color: #36393f;
+            border-radius: 8px;
+            padding: 16px;
+            border: 1px solid #40444b;
+        }
+
+        #dataContainer .label-copy-container h3 {
+            color: #dcddde;
+            margin: 0 0 8px 0;
+            font-size: 16px;
+            font-weight: 500;
+            text-transform: capitalize;
         }
 
         .label-copy-container {
@@ -55,32 +151,107 @@
         }
 
         label {
-            font-weight: bold;
+            font-size: 14px;
+            color: #dcddde;
+            margin-bottom: 8px;
+            font-weight: 500;
         }
 
         input, textarea {
             width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
+            padding: 12px 16px;
             box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            border: 2px solid #40444b;
+            border-radius: 8px;
             font-size: 14px;
+            background-color: #40444b;
+            color: #dcddde;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #5865f2;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #72767d;
+        }
+
+        .password-input {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #b9bbbe;
+            cursor: pointer;
+            padding: 4px;
         }
 
         button {
-            background-color: #2ecc71;
-            color: #fff;
-            padding: 10px 15px;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 500;
             cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary {
+            background-color: #4f545c;
+            color: #ffffff;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5d6269;
+        }
+
+        .btn-primary {
+            background-color: #5865f2;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: #4752c4;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
         }
 
         .copy-button {
-            background-color: #3498db;
-            padding: 5px 10px;
+            background-color: #5865f2;
+            padding: 6px 12px;
             font-size: 12px;
+        }
+
+        /* Improved display: use textarea for values */
+        .value-textarea {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 2px solid #40444b;
+            border-radius: 8px;
+            font-size: 14px;
+            resize: vertical;
+            background-color: #40444b;
+            color: #dcddde;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .value-textarea:hover {
+            background-color: #484c52;
+            border-color: #5865f2;
         }
 
         #dataContainer span {
@@ -94,94 +265,141 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: #333;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 5px;
+            background-color: #2f3136;
+            color: #dcddde;
+            padding: 12px 20px;
+            border-radius: 8px;
             opacity: 0;
             transition: opacity 0.3s;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
         }
 
         #customFields {
-            margin-top: 20px;
+            margin-top: 24px;
         }
+
+        #customFields h3 {
+            color: #dcddde;
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+
+        /* Improved custom field layout */
         .custom-field {
             display: flex;
-            margin-bottom: 10px;
+            flex-direction: column;
+            margin-bottom: 16px;
+            padding: 16px;
+            background-color: #36393f;
+            border-radius: 8px;
         }
-        .custom-field input {
-            flex: 1;
-            margin-right: 10px;
+
+        .custom-field input,
+        .custom-field textarea {
+            margin-bottom: 12px;
         }
+
         .remove-field {
-            background-color: #e74c3c;
+            align-self: flex-start;
+            background-color: #ed4245;
+            padding: 8px 16px;
+            font-size: 12px;
+        }
+
+        .remove-field:hover {
+            background-color: #c73537;
+        }
+
+        #addCustomField {
+            background-color: #4f545c;
+            color: #ffffff;
+            margin-bottom: 16px;
+        }
+
+        #addCustomField:hover {
+            background-color: #5d6269;
         }
     </style>
 </head>
 <body>
-    <h1>🤝Handy Note</h1>
-    <p class="subhead">Personal Info in your Browser</p>
-    <button id="toggleButton">Toggle View</button>
+    <div class="app-container">
+        <div class="app-header">
+            <div class="logo">🤝Handy Note.</div>
+            <nav class="nav-links">
+            </nav>
+        </div>
+        <div class="app-body">
+            <h1>Save your info.</h1>
+            <p class="subhead">Quick access to your personal data. <a href="#" id="toggleButton">View Data</a></p>
     
-    <form id="addForm">
-        <h2>Add Data</h2>
-        <div class="grid-container">
-            <div class="grid-item">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-            </div>
+            <form id="addForm">
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <label for="name">First Name</label>
+                        <input type="text" id="name" name="name" placeholder="Your first name" required>
+                    </div>
 
-            <div class="grid-item">
-                <label for="phoneNumber">Phone Number:</label>
-                <input type="tel" id="phoneNumber" name="phoneNumber" required>
-            </div>
+                    <div class="grid-item">
+                        <label for="phoneNumber">Phone Number</label>
+                        <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Your phone number" required>
+                    </div>
 
-            <div class="grid-item">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email">
-            </div>
+                    <div class="grid-item full-width">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="your.email@example.com">
+                    </div>
 
-            <div class="grid-item">
-                <label for="linkedIn">LinkedIn Link:</label>
-                <input type="url" id="linkedIn" name="linkedIn">
-            </div>
+                    <div class="grid-item full-width">
+                        <label for="linkedIn">LinkedIn Profile</label>
+                        <input type="url" id="linkedIn" name="linkedIn" placeholder="https://linkedin.com/in/yourprofile">
+                    </div>
 
-            <div class="grid-item">
-                <label for="otherLink">Other Link:</label>
-                <input type="url" id="otherLink" name="otherLink">
-            </div>
+                    <div class="grid-item full-width">
+                        <label for="otherLink">Other Link</label>
+                        <input type="url" id="otherLink" name="otherLink" placeholder="Any other relevant URL">
+                    </div>
 
-            <div class="grid-item">
-                <label for="github">GitHub Link:</label>
-                <input type="url" id="github" name="github">
-            </div>
+                    <div class="grid-item full-width">
+                        <label for="github">GitHub Link</label>
+                        <input type="url" id="github" name="github" placeholder="https://github.com/yourusername">
+                    </div>
 
-            <div class="grid-item">
-                <label for="portfolio">Portfolio Link:</label>
-                <input type="url" id="portfolio" name="portfolio">
-            </div>
+                    <div class="grid-item full-width">
+                        <label for="portfolio">Portfolio Link</label>
+                        <input type="url" id="portfolio" name="portfolio" placeholder="https://yourportfolio.com">
+                    </div>
 
-            <div class="grid-item">
-                <label for="coverLetter">Cover Letter:</label>
-                <textarea id="coverLetter" name="coverLetter" rows="4" cols="50"></textarea>
-            </div>
+                    <div class="grid-item full-width">
+                        <label for="coverLetter">Cover Letter</label>
+                        <textarea id="coverLetter" name="coverLetter" rows="4" placeholder="Write your cover letter template..."></textarea>
+                    </div>
 
-            <div class="grid-item">
-                <label for="linkedinInvite">LinkedIn Invite:</label>
-                <textarea id="linkedinInvite" name="linkedinInvite" rows="4" cols="50"></textarea>
+                    <div class="grid-item full-width">
+                        <label for="linkedinInvite">LinkedIn Invite</label>
+                        <textarea id="linkedinInvite" name="linkedinInvite" rows="4" placeholder="Write your LinkedIn invitation template..."></textarea>
+                    </div>
+
+                    <div class="grid-item full-width">
+                        <label for="resume">Resume</label>
+                        <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx">
+                    </div>
+                </div>
+
+                <div id="customFields">
+                    <h3>Custom Fields</h3>
+                </div>
+                <button type="button" id="addCustomField">Add Custom Field</button>
+                
+                <div class="button-row">
+                    <button type="button" class="btn-secondary">Clear Form</button>
+                    <button type="submit" class="btn-primary">Save Data</button>
+                </div>
+            </form>
+
+            <div id="dataContainer" style="display: none;">
+                <!-- Data will be displayed here -->
             </div>
         </div>
-
-        <div id="customFields">
-            <h3>Custom Fields</h3>
-        </div>
-        <button type="button" id="addCustomField">Add Custom Field</button>
-        <br><br>
-        <button type="submit" id="addButton">Submit</button>
-    </form>
-
-    <div id="dataContainer">
-        <!-- Data will be displayed here -->
     </div>
 
     <div id="toast" class="toast"></div>
@@ -191,7 +409,7 @@
             var dataContainer = document.getElementById('dataContainer');
             dataContainer.innerHTML = '';
 
-            var data = JSON.parse(localStorage.getItem('data'));
+            var data = JSON.parse(localStorage.getItem('handNoteData') || '[]');
 
             if (data && data.length > 0) {
                 var item = data[0];
@@ -222,9 +440,20 @@
 
                     gridItem.appendChild(labelCopyContainer);
 
-                    var valueSpan = document.createElement('span');
-                    valueSpan.textContent = item[key];
-                    gridItem.appendChild(valueSpan);
+                    // Replace span with readonly textarea to preserve formatting and enable click-to-copy
+                    (function(value) {
+                        var valueContainer = document.createElement('textarea');
+                        valueContainer.className = 'value-textarea';
+                        valueContainer.readOnly = true;
+                        valueContainer.value = value;
+                        var lineCount = (value.match(/\n/g) || []).length + 1;
+                        valueContainer.rows = Math.min(lineCount, 10);
+                        valueContainer.addEventListener('click', function() {
+                            copyToClipboard(value);
+                            showToast('Copied!');
+                        });
+                        gridItem.appendChild(valueContainer);
+                    })(item[key]);
 
                     gridContainer.appendChild(gridItem);
                 }
@@ -254,7 +483,7 @@
         }
 
         function fillFormWithStoredData() {
-            var storedData = JSON.parse(localStorage.getItem('data'));
+            var storedData = JSON.parse(localStorage.getItem('handNoteData'));
             if (storedData && storedData.length > 0) {
                 var data = storedData[0];
                 document.getElementById('name').value = data.name || '';
@@ -266,6 +495,7 @@
                 document.getElementById('portfolio').value = data.portfolio || '';
                 document.getElementById('coverLetter').value = data.coverLetter || '';
                 document.getElementById('linkedinInvite').value = data.linkedinInvite || '';
+                // Note: File input cannot be pre-filled for security reasons
 
                 // Fill custom fields
                 var customFields = document.getElementById('customFields');
@@ -274,8 +504,8 @@
                     if (!document.getElementById(key)) {
                         addCustomField();
                         var lastField = customFields.lastElementChild;
-                        lastField.querySelector('input:first-child').value = key;
-                        lastField.querySelector('input:nth-child(2)').value = data[key];
+                        lastField.querySelector('input').value = key;
+                        lastField.querySelector('textarea').value = data[key];
                     }
                 }
             }
@@ -291,9 +521,9 @@
             nameInput.placeholder = 'Field Name';
             nameInput.required = true;
 
-            var valueInput = document.createElement('input');
-            valueInput.type = 'text';
+            var valueInput = document.createElement('textarea');
             valueInput.placeholder = 'Field Value';
+            valueInput.rows = 3;
             valueInput.required = true;
 
             var removeButton = document.createElement('button');
@@ -315,8 +545,8 @@
             var customFields = {};
             var customFieldDivs = document.querySelectorAll('#customFields .custom-field');
             customFieldDivs.forEach(function(div) {
-                var nameInput = div.querySelector('input:first-child');
-                var valueInput = div.querySelector('input:nth-child(2)');
+                var nameInput = div.querySelector('input');
+                var valueInput = div.querySelector('textarea');
                 if (nameInput.value && valueInput.value) {
                     customFields[nameInput.value] = valueInput.value;
                 }
@@ -331,7 +561,12 @@
             var data = {};
 
             for (var [key, value] of formData.entries()) {
-                data[key] = value;
+                // Convert file inputs to filenames
+                if (value instanceof File) {
+                    data[key] = value.name;  // Only stores the filename like "resume.pdf"
+                } else {
+                    data[key] = value;
+                }
             }
 
             // Add custom fields to data
@@ -341,7 +576,7 @@
             }
 
             var storedData = [data];
-            localStorage.setItem('data', JSON.stringify(storedData));
+            localStorage.setItem('handNoteData', JSON.stringify(storedData));
 
             displayData();
             addForm.reset();
@@ -357,12 +592,12 @@
             if (addForm.style.display === 'none') {
                 addForm.style.display = 'block';
                 dataContainer.style.display = 'none';
-                toggleButton.textContent = 'Toggle View';
+                toggleButton.textContent = 'View Data';
                 fillFormWithStoredData(); // Auto-fill the form when switching to input mode
             } else {
                 addForm.style.display = 'none';
                 dataContainer.style.display = 'block';
-                toggleButton.textContent = 'Toggle Input';
+                toggleButton.textContent = 'Edit Data';
                 displayData();
             }
         }
@@ -373,7 +608,7 @@
         var addCustomFieldButton = document.getElementById('addCustomField');
         addCustomFieldButton.addEventListener('click', addCustomField);
 
-        var storedData = JSON.parse(localStorage.getItem('data'));
+        var storedData = JSON.parse(localStorage.getItem('handNoteData'));
         if (storedData && storedData.length > 0) {
             toggleView(); // Start in view mode if data exists
         } else {
@@ -381,7 +616,8 @@
             var dataContainer = document.getElementById('dataContainer');
             addForm.style.display = 'block';
             dataContainer.style.display = 'none';
-            toggleButton.textContent = 'Toggle View';
+            var toggleButton = document.getElementById('toggleButton');
+            toggleButton.textContent = 'View Data';
         }
 
         // Open in new window
@@ -391,7 +627,7 @@
             const left = (screen.width - width) / 2;
             const top = (screen.height - height) / 2;
             window.open(window.location.href, '', `width=${width},height=${height},left=${left},top=${top},resizable=yes`);
-            // window.close();
+            // window.close(); // Close original window after opening popup
         }
     </script>
 </body>
